@@ -2,14 +2,22 @@ const express = require('express')
 const router = express.Router()
 const Book = require('../models/book')
 
+const jwt = require("jsonwebtoken")
+
+
 router.get('/', async (req, res) => {
-  let books
-  try {
-    books = await Book.find().sort({ createdAt: 'desc' }).limit(10).exec()
-  } catch {
-    books = []
+  const authcookie = req.cookies.authcookie
+  req.app.set('layout', 'layouts/loginLayout')
+  if (!authcookie) res.redirect('user/login')
+  else{
+    try{
+      res.redirect('user/home')
+    }catch(e){
+      console.error(e)
+    }
   }
-  res.render('index', { books: books })
+
+
 })
 
 module.exports = router

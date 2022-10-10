@@ -1,45 +1,54 @@
 const mongoose = require('mongoose')
 
 const cardSchema = new mongoose.Schema({
+  quantity: {
+    type: Number,
+    required: true
+  },
   name: {
     type: String,
     required: true
   },
-  description: {
-    type: String
-  },
-  publishDate: {
-    type: Date,
-    required: true
-  },
-  pageCount: {
-    type: Number,
-    required: true
-  },
-  createdAt: {
-    type: Date,
-    required: true,
-    default: Date.now
-  },
-  coverImage: {
-    type: Buffer,
-    required: true
-  },
-  coverImageType: {
+  simpleName: {
     type: String,
     required: true
   },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
+  set: {
+    type: String,
+    required: true
+  },
+  cardNumber: {
+    type: Number,
     required: true,
-    ref: 'Author'
-  }
-})
-
-cardSchema.virtual('coverImagePath').get(function() {
-  if (this.coverImage != null && this.coverImageType != null) {
-    return `data:${this.coverImageType};charset=utf-8;base64,${this.coverImage.toString('base64')}`
-  }
+  },
+  setCode: {
+    type: String,
+    required: true
+  },
+  printing: {
+    type: String,
+    required: true
+  },
+  condition: {
+    type: String,
+    required: true,
+  },
+  language: {
+    type: String,
+    required: true,
+  },
+  rarity: {
+    type: String,
+    required: true,
+  },
+  productId: {
+    type: Number,
+    required: true,
+  },
+  sku: {
+    type: Number,
+    required: true,
+  },
 })
 
 module.exports = mongoose.model('Card', cardSchema)

@@ -1,9 +1,9 @@
 const express = require('express')
-const { data } = require('jquery')
 const router = express.Router()
 const Author = require('../models/author')
 const Book = require('../models/book')
 const authors =  Author.find()
+const auth = require('../middleware/auth')
 
 
 
@@ -39,30 +39,7 @@ async function searchFunction(searchParam) {
 
 // All Route
 router.get('/', async (req, res) => {
-  let searchOptions = {}
-  console.log(req.query.name)
-  if (req.query.name != null && req.query.name !== '') {
-    searchOptions.name = new RegExp(req.query.name)  
-    const name = searchOptions.name.toString()
-    var result = name.slice(1, -1)
-    console.log(result)}
-    try {
-      if (req.query.name != null && req.query.name !== '') {
-      const cardData = await searchFunction(result)
-      console.log(cardData.data)
-      res.render('authors/index', {
-        cardData: cardData.data,
-        searchOptions: req.query  
-      })
 
-    }else{
-      res.render('authors/index', {
-        searchOptions: req.query  
-      })
-    }
-  } catch {
-    res.redirect('/')
-  }
 
 })
 

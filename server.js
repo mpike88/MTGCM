@@ -1,17 +1,28 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config({ path: ".env" })
 }
-
+const path = require('path')
 const express = require('express')
 const app = express()
 const expressLayouts = require('express-ejs-layouts')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+const cookieParser = require('cookie-parser')
+const mongoose = require('mongoose')
 
+async function connect () {
+  try{
+    await mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true,  useUnifiedTopology: true , useCreateIndex: true})
+    console.log("connected to Mongo DB")
+  } catch (error) {
+      console.error(error)
+  }
+}
+connect()
 const indexRouter = require('./routes/index')
 const authorRouter = require('./routes/authors')
 const bookRouter = require('./routes/books')
-const loginRouter = require('./routes/login')
+const userRouter = require('./routes/user')
 
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views')
@@ -20,19 +31,8 @@ app.use(expressLayouts)
 app.use(methodOverride('_method'))
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
-
-const mongoose = require('mongoose')
-
-async function connect () {
-  try{
-    await mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true,  useUnifiedTopology: true })
-    console.log("connected to Mongo DB")
-  } catch (error) {
-      console.error(error)
-  }
-}
-
-connect()
+app.use(bodyParser.json())
+app.use(cookieParser())
 //const mongoose = require('mongoose')
 //mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
 //const db = mongoose.connection
@@ -42,6 +42,6 @@ connect()
 app.use('/', indexRouter)
 app.use('/authors', authorRouter)
 app.use('/books', bookRouter)
-app.use('/login', loginRouter)
+app.use('/user', userRouter)
 
 app.listen(process.env.PORT || 3000)
