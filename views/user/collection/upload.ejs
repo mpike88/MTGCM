@@ -1,0 +1,51 @@
+<h2 class="page-header">Upload File </h2>
+<form action="/user/collection/upload" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+      <input type="file" class="form-control" name="csvFile" />
+    </div>
+    <button type="submit" class="btn btn-success">Upload</button>
+  </form>
+<br>
+<%if(data){%>
+  <div class="container mt-4">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#Id</th>
+          <th>Quantity</th>
+          <th>Name</th>
+          <th>Simple Name</th>
+          <th>Set</th>
+          <th>Card Number</th>
+          <th>Set Code</th>
+          <th>Printing</th>
+          <th>Condition</th>
+          <th>Language</th>
+          <th>Rarity</th>
+          <th>Product Id</th>
+          <th>SKU</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <%for(var i=0; i < data.length; i++){%>
+        <tr>
+          <td><%= i+1%></td>
+          <td><%= data[i].quantity%></td>
+          <td><%= data[i].name%></td>
+          <td><%= data[i].simpleName%></td>
+          <td><%= data[i].set%></td>
+          <td><%= data[i].cardNumber%></td>
+          <td><%= data[i].setCode%></td>
+          <td><%= data[i].printing%></td>
+          <td><%= data[i].condition%></td>
+          <td><%= data[i].language%></td>
+          <td><%= data[i].rarity%></td>
+          <td><%= data[i].productId%></td>
+          <td><%= data[i].sku%></td>
+        </tr>
+        <%}%>
+      </tbody>
+    </table>
+  </div>
+  <%}%>

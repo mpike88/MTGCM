@@ -5,6 +5,7 @@
 @import 'shared/form.css';
 @import 'shared/author.css';
 @import 'shared/books.css';
+@import 'shared/nav.css';
 
 :root {
   font-family: 'Gotham Rounded';
@@ -22,6 +23,12 @@ body {
 
 .container {
   max-width: 1200px;
+  margin: auto;
+  margin-bottom: 3rem;
+}
+
+.collection-container {
+  max-width: 2500px;
   margin: auto;
   margin-bottom: 3rem;
 }

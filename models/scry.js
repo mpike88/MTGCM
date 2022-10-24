@@ -1,32 +1,6 @@
 const mongoose = require('mongoose')
 
 
-
-/*const CardSchema = new mongoose.Schema({
-	quantity: { type: Number, required: false },
-	name: { type: String, required: false },
-	simpleName: { type: String, required: false },
-	set: { type: String, required: false },
-	cardNumber: { type: Number, required: false, },
-	setCode: { type: String, required: false },
-	printing: { type: String, required: false },
-	condition: { type: String, required: false, },
-	language: { type: String, required: false, },
-	rarity: { type: String, required: false, },
-	productId: { type: Number, required: false, },
-	sku: { type: Number, required: false, }
-  })
-*/
-
-
-
-
-const CollectorInfoSchema = new mongoose.Schema({
-	quantity: { type: Number, required: false },
-	printing: { type: String, required: false },
-	condition: { type: String, required: false, }
-  })
-
 const ImageuriSchema = new mongoose.Schema({
 	small: { type: String, required: false },
 	normal: { type: String, required: false },
@@ -95,7 +69,7 @@ const RelatedUriSchema = new mongoose.Schema({
 
 
 
-const UpdatedCardSchema = new mongoose.Schema({
+const ScryCardSchema = new mongoose.Schema({
 object: { type: String, required: false },
 id: { type: Number, required: false },
 oracle_id: { type: String, required: false },
@@ -108,7 +82,7 @@ name: { type: String, required: false },
 lang: { type: String, required: false },
 released_at: { type: Date, required: false },
 uri: { type: String, required: false },
-scryfall_uri: { type: String, required: false},
+scryfall_uri: { type: String, required: false },
 layout: { type: String, required: false },
 highres_image: { type: Boolean, required: false },
 image_status: { type: String, required: false },
@@ -141,7 +115,7 @@ set_name: { type: String, required: false },
 set_type: { type: String, required: false },
 set_uri: { type: String, required: false },
 set_search_uri: { type: String, required: false },
-scryfall_set_uri: { type: String, required: false},
+scryfall_set_uri: { type: String, required: false },
 rulings_uri: { type: String, required: false },
 prints_search_uri: { type: String, required: false },
 collector_number: { type: String, required: false },
@@ -166,30 +140,11 @@ prices: {
 related_uris: {
 	type: RelatedUriSchema,
 	required: false
-},
-collector_info: {
-	type: CollectorInfoSchema,
-	required: false
 }
-})
-
-
-
-
-const UserSchema = new mongoose.Schema(
-	{
-		username: { type: String, required: true, unique: true },
-		password: { type: String, required: true },
-		cards: [UpdatedCardSchema]
-	},
-	{ collection: 'users'}
+},
+{ collection: 'cards' }
 )
 
-
-
-
-
 module.exports = {
-	UserSchema: mongoose.model('UserSchema', UserSchema),
-	UpdatedCardSchema: mongoose.model('UpdatedCardSchema', UpdatedCardSchema)
+	ScryCardSchema: mongoose.model('ScryCardSchema', ScryCardSchema)
   };

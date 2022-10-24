@@ -1,0 +1,27 @@
+const {ScryCardSchema} = require('../models/scry')
+module.exports = async function(setParam,langParam,collParam,collQuanParam,collPrintParam,collConParam){
+
+    try {
+      const response = await ScryCardSchema.findOne({ set: setParam, lang: langParam, collector_number: collParam})
+      if ( response != ''){
+        jsonData = response.toJSON()
+        var collector_info = {
+            'collector_info': {
+              'quantity': collQuanParam,
+              'printing': collPrintParam,
+              'condition': collConParam,
+            }
+          }
+        newData = {...jsonData, ...collector_info}
+        return newData
+        //myLogger.log(existCardArray)
+      }else{
+        console.log("empty data")
+      }
+      } catch (error) {
+      console.log(error)
+    }
+}
+
+
+

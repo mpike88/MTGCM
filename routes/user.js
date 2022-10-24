@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const User = require('../models/user')
+const {UserSchema} = require('../models/user')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const bodyParser = require('body-parser')
@@ -53,7 +53,7 @@ catch {
 // Login Fields
 router.post('/login', async (req, res) => {
 	const { username, password } = req.body
-	const user = await User.findOne({ username }).lean()
+	const user = await UserSchema.findOne({ username }).lean()
 
 	if (!user) {
 		return res.json({ status: 'error', error: 'Invalid username/password' })
@@ -101,7 +101,7 @@ router.post('/register', async (req, res) => {
 	const password = await bcrypt.hash(plainTextPassword, 10)
 
 	try {
-		const response = await User.create({
+		const response = await UserSchema.create({
 			username,
 			password
 		})
@@ -117,11 +117,11 @@ router.post('/register', async (req, res) => {
 	res.json({ status: 'ok' })
 })
 
-router.get("/home", checkToken, async (req, res) => {
+router.get("/home", checkToken,async (req, res) => {
 
 	
 	let searchOptions = {}
-	console.log(req.query.name)
+	console.log(req.user)
 	console.log("got to router")
 	if (req.query.name != null && req.query.name !== '') {
 	  searchOptions.name = new RegExp(req.query.name)  
@@ -131,7 +131,7 @@ router.get("/home", checkToken, async (req, res) => {
 	  try {
 		if (req.query.name != null && req.query.name !== '') {
 		const cardData = await searchFunction(result)
-		console.log(cardData.data)
+		//console.log(cardData.data)
 		req.app.set('layout', 'layouts/layout')
 		res.render('user/home', {
 		  cardData: cardData.data,

@@ -1,0 +1,16 @@
+<nav class="nav-nav">
+  <h2 class="nav-title" href="/">My Collection</a>
+  <ul>
+    <li><a href="/user/home">Search</a></li>
+    <li><a href="/authors/new">Group</a></li>
+    <li><a href="/books">Sort</a></li>
+    <li><a href="/user/collection/upload">Upload</a></li>
+  </ul>
+</nav>
+<div class ="collection-container">
+  <% if (typeof cardData !== 'undefined') { %>
+
+    <%- include('../../partials/bookGrid', { cardData: cardData}) %>
+    <% } %>
+</div>
+<br>

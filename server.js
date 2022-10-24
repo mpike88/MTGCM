@@ -12,7 +12,7 @@ const mongoose = require('mongoose')
 
 async function connect () {
   try{
-    await mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true,  useUnifiedTopology: true , useCreateIndex: true})
+    await mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true,  useUnifiedTopology: true , useCreateIndex: true, useFindAndModify: false})
     console.log("connected to Mongo DB")
   } catch (error) {
       console.error(error)
@@ -21,7 +21,7 @@ async function connect () {
 connect()
 const indexRouter = require('./routes/index')
 const authorRouter = require('./routes/authors')
-const bookRouter = require('./routes/books')
+const collectionRouter = require('./routes/collection')
 const userRouter = require('./routes/user')
 
 app.set('view engine', 'ejs')
@@ -41,7 +41,7 @@ app.use(cookieParser())
 
 app.use('/', indexRouter)
 app.use('/authors', authorRouter)
-app.use('/books', bookRouter)
+app.use('/user/collection', collectionRouter)
 app.use('/user', userRouter)
 
 app.listen(process.env.PORT || 3000)
